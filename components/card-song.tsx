@@ -6,7 +6,7 @@ import { SongForm } from "./song-form";
 import { SongResult } from "./song-result";
 
 export default function CardSong() {
-  const [randomSongId, setRandomSongId] = useState("");
+  const [randomSongId, setRandomSongId] = useState<string | null>(null);
 
   const queryClient = new QueryClient();
 
@@ -23,22 +23,26 @@ export default function CardSong() {
             <h1 className="text-7xl">GET A SONG</h1>
           </div>
         </div>
-        <div>
-          {!randomSongId && <SongForm onSongSubmitted={handleSongSubmitted} />}
-          <SongResult randomSongId={randomSongId} />
+        <div className="space-y-10">
+          {!randomSongId && (
+            <>
+              <SongForm onSongSubmitted={handleSongSubmitted} />
+              <p className="text-sm text-left w-full text-gray-500">
+                Paste your favorite Spotify song above
+              </p>
+            </>
+          )}
         </div>
-        {!randomSongId && (
-          <p className="text-sm text-left w-full text-gray-500">
-            Paste your favorite Spotify song above
-          </p>
-        )}
         {randomSongId && (
-          <span
-            className="underline text-gray-500"
-            onClick={() => setRandomSongId("")}
-          >
-            Reset
-          </span>
+          <div className="space-y-20 h-64">
+            <SongResult randomSongId={randomSongId} />
+            <span
+              className="underline cursor-pointer hover:opacity-50 text-gray-500"
+              onClick={() => setRandomSongId("")}
+            >
+              Reset
+            </span>
+          </div>
         )}
       </div>
     </QueryClientProvider>
