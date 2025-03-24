@@ -6,7 +6,7 @@ interface SongResultProps {
 
 export function SongResult({ randomSongId }: SongResultProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-10">
       {randomSongId && <SpotifyPlayer spotifyId={randomSongId} />}
     </div>
   );
