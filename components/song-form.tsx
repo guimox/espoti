@@ -112,14 +112,18 @@ export function SongForm({ onSongSubmitted }: SongFormProps) {
             value={url}
             placeholder="https://open.spotify.com/track/..."
             onChange={(e) => setUrl(e.target.value)}
-            className={error ? "border-red-500" : ""}
+            className={
+              error
+                ? "border-red-500 bg-[#202020] "
+                : " bg-[#202020] border-[#202020]"
+            }
             disabled={submitSongMutation.isPending}
           />
           {error && <p className="text-sm font-medium text-red-500">{error}</p>}
         </div>
         <Button
           type="submit"
-          className="hover:cursor-pointer"
+          className="hover:cursor-pointer bg-green-500 hover:bg-green-700"
           disabled={submitSongMutation.isPending}
         >
           {submitSongMutation.isPending ? "Processing..." : "Share"}

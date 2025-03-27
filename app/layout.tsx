@@ -5,7 +5,7 @@ import "./globals.css";
 const geistSans = Staatliches({ variable: "--font-custom", weight: "400" });
 
 export const metadata: Metadata = {
-  title: "Spoti",
+  title: "Sinalos",
   description: "Share your favorite songs organically.",
 };
 
@@ -16,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} antialiased grid h-screen`}>
+      <body
+        className={`${geistSans.variable} antialiased bg-black grid h-screen`}
+      >
         {children}
       </body>
     </html>

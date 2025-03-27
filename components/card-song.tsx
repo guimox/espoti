@@ -27,7 +27,7 @@ export default function CardSong() {
           {!randomSongId && (
             <>
               <SongForm onSongSubmitted={handleSongSubmitted} />
-              <p className="text-sm text-left w-full text-gray-500">
+              <p className="text-sm text-left w-full text-[#b1b1b1]">
                 Paste your favorite Spotify song above
               </p>
             </>
