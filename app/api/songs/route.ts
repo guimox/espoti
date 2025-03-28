@@ -4,6 +4,13 @@ import { z } from "zod";
 
 const prisma = new PrismaClient();
 
+export async function GET() {
+  const songsCount = await prisma.song.count({});
+  return NextResponse.json({
+    songsCount,
+  });
+}
+
 const songSchema = z.object({
   url: z.string().url(),
 });
@@ -27,14 +34,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check if the song already exists in the database
     const existingSong = await prisma.song.findUnique({
       where: {
         spotifyId,
       },
     });
 
-    // If song doesn't exist, create it
     if (!existingSong) {
       await prisma.song.create({
         data: {
@@ -43,7 +48,6 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Get count of other songs (excluding the current one)
     const songsCount = await prisma.song.count({
       where: {
         NOT: {
@@ -52,7 +56,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Get a random song that's not the submitted one
     const randomIndex = Math.floor(Math.random() * songsCount);
     const randomSong = await prisma.song.findMany({
       where: {

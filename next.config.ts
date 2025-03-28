@@ -1,10 +1,13 @@
-import { setupDevPlatform } from "@cloudflare/next-on-pages/next-dev";
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {};
 
 if (process.env.NODE_ENV === "development") {
-  await setupDevPlatform();
+  try {
+    const { setupDevPlatform } = require("@cloudflare/next-on-pages/next-dev");
+    setupDevPlatform();
+  } catch (error) {
+    console.error("Failed to set up Cloudflare dev platform:", error);
+  }
 }
 
-export default nextConfig;
+module.exports = nextConfig;

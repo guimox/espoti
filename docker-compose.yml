@@ -3,10 +3,10 @@ version: "3.8"
 services:
   postgres:
     image: postgres:latest
-    container_name: spotify_random
+    container_name: sinalos-db
     restart: always
     environment:
-      POSTGRES_DB: spotify-random
+      POSTGRES_DB: sinalos
       POSTGRES_USER: user
       POSTGRES_PASSWORD: secretPassword
     ports:

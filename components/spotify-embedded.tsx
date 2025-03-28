@@ -33,8 +33,20 @@ declare global {
   }
 }
 
-export function SpotifyPlayer({ spotifyId }: { spotifyId: string }) {
-  const [isLoading, setIsLoading] = useState(true);
+export function SpotifyEmbedded({ spotifyId }: { spotifyId: string | null }) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (!spotifyId) {
+    return (
+      <div className="w-full h-90 relative flex items-center justify-center bg-zinc-800 rounded-lg">
+        <img
+          src="/audio.svg"
+          alt="GitHub"
+          className="w-15 h-15 active:scale-105 cursor-pointer hover:opacity-50"
+        />
+      </div>
+    );
+  }
 
   useEffect(() => {
     let isMounted = true;
@@ -94,12 +106,12 @@ export function SpotifyPlayer({ spotifyId }: { spotifyId: string }) {
   }, [spotifyId]);
 
   return (
-    <div className="w-full mx-auto max-w-[500px] relative">
+    <div className="w-full md:w-76 h-90 relative">
       <div id="embed-iframe" className="h-full"></div>
-      {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg">
+      {isLoading && spotifyId && (
+        <div className="absolute inset-0 flex items-center justify-center bg-zinc-900 rounded-lg">
           <svg
-            className="animate-spin h-8 w-8 text-gray-600"
+            className="animate-spin h-8 w-8 text-green-600"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

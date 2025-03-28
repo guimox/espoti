@@ -1,9 +1,10 @@
 {
-  "name": "spotify-random",
+  "name": "sinalos",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "cp .env.dev .env.local && next dev --turbopack",
+    "prod": "cp .env.prod .env && next dev --turbopack",
     "build": "next build",
     "pages:build": "npx @cloudflare/next-on-pages",
     "preview": "npm run pages:build && wrangler pages dev",
@@ -16,10 +17,8 @@
     "@prisma/client": "^6.5.0",
     "@radix-ui/react-label": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.2",
-    "@tanstack/react-query": "^5.69.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.483.0",
     "next": "15.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -34,6 +33,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "prisma": "^6.5.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

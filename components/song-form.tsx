@@ -1,11 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { InfoIcon } from "lucide-react";
+import { useFetch } from "@/hooks/useFetch";
 
 interface SongFormProps {
   onSongSubmitted: (randomSongId: string) => void;
@@ -21,8 +20,7 @@ interface SubmitSongResponse {
 export function SongForm({ onSongSubmitted }: SongFormProps) {
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
-  const [statusMessage, setStatusMessage] = useState("");
-  const [isDuplicate, setIsDuplicate] = useState(false);
+  const [submissionUrl, setSubmissionUrl] = useState<string | null>(null);
 
   const extractSpotifyId = (url: string) => {
     const regex = /\/track\/([a-zA-Z0-9]+)/;
@@ -30,50 +28,29 @@ export function SongForm({ onSongSubmitted }: SongFormProps) {
     return match ? match[1] : null;
   };
 
-  const submitSongMutation = useMutation({
-    mutationFn: async (songUrl: string) => {
-      const response = await fetch("/api/songs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url: songUrl }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Failed to submit song");
-      }
-
-      return response.json() as Promise<SubmitSongResponse>;
-    },
-    onSuccess: (data) => {
+  const {
+    data,
+    error: fetchError,
+    isLoading,
+  } = useFetch<SubmitSongResponse>(submissionUrl, {
+    immediate: !!submissionUrl,
+    onSuccess: (responseData) => {
       // Check if the response has a randomId
-      if (data.randomId) {
-        onSongSubmitted(data.randomId);
+      if (responseData.randomId) {
+        onSongSubmitted(responseData.randomId);
       }
-
-      // Set duplicate status and message from API response
-      setIsDuplicate(data.isDuplicate);
-      setStatusMessage(data.message);
 
       // Reset form
       setUrl("");
       setError("");
     },
-    onError: (err: Error) => {
-      console.error("Error:", err);
-      setIsDuplicate(false);
-      setStatusMessage("");
-      setError(err.message || "Something went wrong");
-    },
+    transformer: (rawData) => rawData as SubmitSongResponse,
   });
 
-  const onSubmit = (e: { preventDefault: () => void }) => {
+  const onSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setError("");
-    setStatusMessage("");
-    setIsDuplicate(false);
+    setSubmissionUrl(null);
 
     if (!url) {
       setError("Please enter a Spotify song URL");
@@ -88,21 +65,21 @@ export function SongForm({ onSongSubmitted }: SongFormProps) {
       return;
     }
 
-    submitSongMutation.mutate(url);
+    // Construct the submission URL to trigger the fetch
+    setSubmissionUrl(`/api/sonsgs?url=${encodeURIComponent(url)}`);
   };
 
   return (
-    <div className="space-y-4">
-      {statusMessage && (
+    <div className="space-y-4 my-8">
+      {data?.message && (
         <Alert
           className={
-            isDuplicate
+            data.isDuplicate
               ? "bg-amber-50 text-amber-800 border-amber-300"
               : "bg-green-50 text-green-800 border-green-300"
           }
         >
-          <InfoIcon className="h-4 w-4" />
-          <AlertDescription>{statusMessage}</AlertDescription>
+          <AlertDescription>{data.message}</AlertDescription>
         </Alert>
       )}
 
@@ -117,16 +94,16 @@ export function SongForm({ onSongSubmitted }: SongFormProps) {
                 ? "border-red-500 bg-[#202020] "
                 : " bg-[#202020] border-[#202020]"
             }
-            disabled={submitSongMutation.isPending}
+            disabled={isLoading}
           />
           {error && <p className="text-sm font-medium text-red-500">{error}</p>}
         </div>
         <Button
           type="submit"
           className="hover:cursor-pointer bg-green-500 hover:bg-green-700"
-          disabled={submitSongMutation.isPending}
+          disabled={isLoading}
         >
-          {submitSongMutation.isPending ? "Processing..." : "Share"}
+          {isLoading ? "Saving..." : "Share"}
         </Button>
       </form>
     </div>

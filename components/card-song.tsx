@@ -1,50 +1,47 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { SongForm } from "./song-form";
-import { SongResult } from "./song-result";
+import { SpotifyEmbedded } from "./spotify-embedded";
 
 export default function CardSong() {
   const [randomSongId, setRandomSongId] = useState<string | null>(null);
-
-  const queryClient = new QueryClient();
 
   const handleSongSubmitted = (randomSongId: string) => {
     setRandomSongId(randomSongId);
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="w-full max-w-md mx-auto space-y-10">
-        <div className="text-3xl flex font-bold">
-          <div>
-            <h1 className="text-7xl">SHARE A SONG</h1>
-            <h1 className="text-7xl">GET A SONG</h1>
-          </div>
+    <section className="w-full justify-around flex-col md:flex-row items-center px-10 gap-20 py-10 flex mx-auto space-y-10">
+      <div className="flex flex-col gap-5 w-full">
+        <div className="flex text-[#f0f0f0] flex-col gap-2 w-full font-bold">
+          <h1 className="text-6xl lg:text-8xl">
+            <span className="underline underline-offset-8 decoration-green-500">
+              SHARE
+            </span>{" "}
+            A SONG
+          </h1>
+          <h1 className="text-6xl lg:text-8xl">
+            <span className="decoration-green-500 underline underline-offset-8">
+              GET
+            </span>{" "}
+            A SONG
+          </h1>
         </div>
-        <div className="space-y-10">
+        <div className="space-y-10 max-w-sm">
           {!randomSongId && (
             <>
               <SongForm onSongSubmitted={handleSongSubmitted} />
-              <p className="text-sm text-left w-full text-[#b1b1b1]">
+              <p className="text-sm text-left w-full text-zinc-500">
                 Paste your favorite Spotify song above
               </p>
             </>
           )}
         </div>
-        {randomSongId && (
-          <div className="space-y-20 h-64">
-            <SongResult randomSongId={randomSongId} />
-            <span
-              className="underline cursor-pointer hover:opacity-50 text-gray-500"
-              onClick={() => setRandomSongId("")}
-            >
-              Reset
-            </span>
-          </div>
-        )}
       </div>
-    </QueryClientProvider>
+      <div className="space-y-20 w-2/3 text-right">
+        <SpotifyEmbedded spotifyId={randomSongId} />
+      </div>
+    </section>
   );
 }
