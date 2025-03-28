@@ -23,11 +23,8 @@ export default async function Home() {
 
   return (
     <main className="w-full mx-auto flex-col justify-between duration-300 transition-all bg-[#303030] text-zinc-500 gap-10 items-center h-full my-auto rounded flex py-10">
-      <div className="flex flex-col items-start w-full h-full py-8 md:py-20 px-8">
-        <CardSong />
-        <span className="text-zinc-500 px-10 text-sm w-full">
-          {`${songsCount} unique songs uploaded`}
-        </span>
+      <div className="flex bg flex-col items-start w-full h-full py-8 md:py-20 px-8">
+        <CardSong songsCount={songsCount} />
       </div>
     </main>
   );
