@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 
-// Generic type for the data fetched
 type FetchResult<T> = {
   data: T | null;
   error: Error | null;
@@ -9,9 +8,11 @@ type FetchResult<T> = {
   refetch: () => void;
 };
 
-// Options type for additional configuration
 interface UseFetchOptions<T> {
+  method?: "GET" | "POST" | "PUT" | "DELETE";
   immediate?: boolean;
+  body?: any;
+  headers?: Record<string, string>;
   transformer?: (data: any) => T;
   onSuccess?: (data: T) => void;
   onError?: (error: Error) => void;
@@ -22,7 +23,10 @@ export function useFetch<T = any>(
   options: UseFetchOptions<T> = {}
 ): FetchResult<T> {
   const {
+    method = "GET",
     immediate = true,
+    body = null,
+    headers = {},
     transformer = (data) => data as T,
     onSuccess,
     onError,
@@ -39,10 +43,22 @@ export function useFetch<T = any>(
     setError(null);
 
     try {
-      const response = await fetch(url);
+      const fetchOptions: RequestInit = {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          ...headers,
+        },
+        body: body ? JSON.stringify(body) : undefined,
+      };
+
+      const response = await fetch(url, fetchOptions);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${errorText}`
+        );
       }
 
       const rawData = await response.json();
@@ -59,7 +75,7 @@ export function useFetch<T = any>(
     } finally {
       setIsLoading(false);
     }
-  }, [url, transformer, onSuccess, onError]);
+  }, [url, method, body, headers, transformer, onSuccess, onError]);
 
   // Fetch immediately if specified (default true)
   useEffect(() => {

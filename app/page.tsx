@@ -1,4 +1,4 @@
-import CardSong from "@/components/card-song";
+import CardSong from "@/sections/card-song";
 
 async function fetchSongCount() {
   try {

@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} *:selection:bg-green-600 antialiased max-w-[1100px] duration-500 transition-all mx-auto flex flex-col justify-between bg-zinc-900 h-screen relative`}
+        className={`${geistSans.variable} *:selection:bg-green-700 *:selection:text-white antialiased max-w-[1100px] duration-500 transition-all mx-auto flex flex-col justify-between bg-zinc-900 h-screen relative`}
       >
         <div className="noise-overlay" />
         <Header />

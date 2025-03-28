@@ -37,7 +37,7 @@ h3 {
 .noise-overlay {
   z-index: 1000;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.045;
   background-image: url("/grain.gif");
   background-position: 0 0;
   background-size: auto;
