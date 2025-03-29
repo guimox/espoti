@@ -1,46 +1,31 @@
-"use client";
+'use client';
 
+import * as React from 'react';
+import Image from 'next/image';
+import cogIcon from '../public/cog.svg';
 import {
   NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
   NavigationMenuContent,
+  NavigationMenuItem,
   NavigationMenuLink,
-} from "@radix-ui/react-navigation-menu";
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from './ui/navigation-menu';
 
 export default function Header() {
   return (
-    <header className="text-sm py-6 px-8 lg:px-0 w-full max-w-[1100px] flex justify-between items-center">
-      <p className="text-[#f0f0f0] font-bold text-lg">Sinalos</p>
+    <header className="mx-auto flex w-full max-w-[1100px] items-center justify-between px-8 py-6 text-sm xl:px-0">
+      <p className="text-lg font-bold text-white">Sinalos</p>
       <NavigationMenu>
-        <NavigationMenuList className="relative">
+        <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="text-white cursor-pointer">
-              a
-              <img src="/cog.svg" alt="GitHub" className="w-7 h-7" />
+            <NavigationMenuTrigger className="bg-transparent hover:bg-transparent">
+              <Image src={cogIcon} className="h-6 w-6" alt="cog" />
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="absolute z-50 top-full right-0 mt-2 w-48 bg-[#303030] shadow-2xl border border-zinc-800 rounded-md text-[#fafafa] overflow-hidden">
-              <div className="flex flex-col">
-                <NavigationMenuLink
-                  className="px-4 py-2 hover:bg-zinc-800 cursor-pointer"
-                  asChild
-                >
-                  <div>Autoplay</div>
-                </NavigationMenuLink>
-                <NavigationMenuLink
-                  className="px-4 py-2 hover:bg-zinc-800 cursor-pointer"
-                  asChild
-                >
-                  <div>Song</div>
-                </NavigationMenuLink>
-                <NavigationMenuLink
-                  className="px-4 py-2 hover:bg-zinc-800 cursor-pointer"
-                  asChild
-                >
-                  <div>Theme</div>
-                </NavigationMenuLink>
-              </div>
+            <NavigationMenuContent className="rounded border-zinc-900 bg-[#303030] text-white">
+              <NavigationMenuLink>Autoplay</NavigationMenuLink>
+              <NavigationMenuLink>Theme</NavigationMenuLink>
+              <NavigationMenuLink>Sound</NavigationMenuLink>
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>

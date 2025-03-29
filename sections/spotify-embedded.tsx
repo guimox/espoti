@@ -1,5 +1,8 @@
-"use client";
-import { useEffect, useState, useRef } from "react";
+'use client';
+
+import Image from 'next/image';
+import { useEffect, useState, useRef } from 'react';
+import audioIcon from '../public/audio.svg';
 
 declare namespace SpotifyIframeApi {
   interface Controller {
@@ -54,7 +57,7 @@ export function SpotifyEmbedded({ spotifyId }: { spotifyId: string | null }) {
       if (!element || !spotifyId) return;
 
       if (!previousSpotifyIdRef.current) {
-        element.innerHTML = "";
+        element.innerHTML = '';
       }
 
       const options = { uri: `spotify:track:${spotifyId}` };
@@ -69,24 +72,24 @@ export function SpotifyEmbedded({ spotifyId }: { spotifyId: string | null }) {
         if (!isMountedRef.current) return;
 
         if (controllerRef.current) {
-          controllerRef.current.removeListener("ready", () => {});
-          controllerRef.current.removeListener("loading_error", () => {});
+          controllerRef.current.removeListener('ready', () => {});
+          controllerRef.current.removeListener('loading_error', () => {});
         }
 
         controllerRef.current = ctrl;
         previousSpotifyIdRef.current = spotifyId;
 
-        ctrl.addListener("ready", () => {
+        ctrl.addListener('ready', () => {
           if (!isMountedRef.current) return;
           setIsLoading(false);
-          console.log("Spotify Player Ready");
+          console.log('Spotify Player Ready');
           ctrl.play();
         });
 
-        ctrl.addListener("loading_error", (error) => {
+        ctrl.addListener('loading_error', (error) => {
           if (!isMountedRef.current) return;
           setIsLoading(false);
-          console.error("Spotify Player Loading Error", error);
+          console.error('Spotify Player Loading Error', error);
         });
       });
     };
@@ -106,8 +109,8 @@ export function SpotifyEmbedded({ spotifyId }: { spotifyId: string | null }) {
             'script[src="https://open.spotify.com/embed/iframe-api/v1"]'
           )
         ) {
-          const script = document.createElement("script");
-          script.src = "https://open.spotify.com/embed/iframe-api/v1";
+          const script = document.createElement('script');
+          script.src = 'https://open.spotify.com/embed/iframe-api/v1';
           script.async = true;
           document.body.appendChild(script);
         }
@@ -121,31 +124,31 @@ export function SpotifyEmbedded({ spotifyId }: { spotifyId: string | null }) {
     return () => {
       isMountedRef.current = false;
       if (controllerRef.current) {
-        controllerRef.current.removeListener("ready", () => {});
-        controllerRef.current.removeListener("loading_error", () => {});
+        controllerRef.current.removeListener('ready', () => {});
+        controllerRef.current.removeListener('loading_error', () => {});
       }
     };
   }, [spotifyId]);
 
   if (!spotifyId) {
     return (
-      <div className="w-full h-90 relative flex items-center justify-center bg-zinc-900 rounded-lg">
-        <img
-          src="/audio.svg"
+      <div className="relative flex h-90 w-full items-center justify-center rounded-lg bg-zinc-900">
+        <Image
+          src={audioIcon}
           alt="GitHub"
-          className="w-15 h-15 active:scale-105 cursor-pointer hover:opacity-50"
+          className="h-15 w-15 cursor-pointer hover:opacity-50 active:scale-105"
         />
       </div>
     );
   }
 
   return (
-    <div className="w-full h-90 relative">
+    <div className="relative h-90 w-full">
       <div id="embed-iframe" ref={embedContainerRef} className="h-full"></div>
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-zinc-900 rounded-lg">
+        <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-zinc-900">
           <svg
-            className="animate-spin h-8 w-8 text-green-600"
+            className="h-8 w-8 animate-spin text-green-600"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

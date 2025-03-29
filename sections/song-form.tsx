@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 const songUrlSchema = z.object({
   url: z
     .string()
-    .min(1, "Enter a Spotify song URL")
+    .min(1, 'Enter a Spotify song URL')
     .refine(
       (value) => {
         const regex = /\/track\/([a-zA-Z0-9]+)/;
         return regex.test(value);
       },
-      { message: "Invalid Spotify URL format" }
+      { message: 'Invalid Spotify URL format' }
     ),
 });
 
@@ -44,13 +44,13 @@ export function SongForm({ onSongSubmitted }: SongFormProps) {
   } = useForm<z.infer<typeof songUrlSchema>>({
     resolver: zodResolver(songUrlSchema),
     defaultValues: {
-      url: "",
+      url: '',
     },
   });
 
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue("url", e.target.value);
-    clearErrors("url");
+    setValue('url', e.target.value);
+    clearErrors('url');
     setErrorMessage(null);
   };
 
@@ -68,17 +68,17 @@ export function SongForm({ onSongSubmitted }: SongFormProps) {
 
     setIsLoading(true);
     try {
-      const response = await fetch("/api/songs", {
-        method: "POST",
+      const response = await fetch('/api/songs', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ url: data.url }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to submit song.");
+        throw new Error(errorData.error || 'Failed to submit song.');
       }
 
       const responseData: SubmitSongResponse = await response.json();
@@ -89,7 +89,7 @@ export function SongForm({ onSongSubmitted }: SongFormProps) {
 
       if (responseData.randomId) {
         onSongSubmitted(responseData.randomId);
-        setValue("url", "");
+        setValue('url', '');
       }
     } catch (err: any) {
       setErrorMessage(err.message);
@@ -99,25 +99,23 @@ export function SongForm({ onSongSubmitted }: SongFormProps) {
   };
 
   return (
-    <div className="space-y-4 my-8">
+    <div className="my-8 space-y-4">
       <form onSubmit={handleSubmit(onSubmit)} className="flex gap-4">
-        <div className="space-y-2 flex-1 relative">
+        <div className="relative flex-1 space-y-2">
           <Input
-            {...register("url")}
+            {...register('url')}
             placeholder="Paste your favorite Spotify song link"
             onChange={handleUrlChange}
             disabled={isLoading}
             className={
               errors.url || errorMessage
-                ? "border-red-500 bg-zinc-900"
-                : "bg-zinc-900 border-zinc-900"
+                ? 'border-red-500 bg-zinc-900'
+                : 'border-zinc-900 bg-zinc-900'
             }
           />
-          <div className="absolute h-5 mt-1">
+          <div className="absolute mt-1 h-5">
             {errors.url && (
-              <p className="text-sm font-medium text-red-500">
-                {errors.url.message}
-              </p>
+              <p className="text-sm font-medium text-red-500">{errors.url.message}</p>
             )}
             {errorMessage && (
               <p className="text-sm font-medium text-red-500">{errorMessage}</p>
@@ -126,10 +124,10 @@ export function SongForm({ onSongSubmitted }: SongFormProps) {
         </div>
         <Button
           type="submit"
-          className="hover:cursor-pointer active:scale-105 bg-green-500 hover:bg-green-700"
+          className="bg-green-500 hover:cursor-pointer hover:bg-green-700 active:scale-105"
           disabled={isLoading}
         >
-          {isLoading ? "Saving..." : "Share"}
+          {isLoading ? 'Saving...' : 'Share'}
         </Button>
       </form>
     </div>

@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { z } from "zod";
+import { NextRequest, NextResponse } from 'next/server';
+import { PrismaClient } from '@prisma/client';
+import { z } from 'zod';
 
 const prisma = new PrismaClient();
 
@@ -28,10 +28,7 @@ export async function POST(req: NextRequest) {
 
     const spotifyId = extractSpotifyId(url);
     if (!spotifyId) {
-      return NextResponse.json(
-        { error: "Invalid Spotify URL format" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Invalid Spotify URL format' }, { status: 400 });
     }
 
     const existingSong = await prisma.song.findUnique({
@@ -73,20 +70,17 @@ export async function POST(req: NextRequest) {
         randomId: randomSong[0].spotifyId,
       });
     } else {
-      return NextResponse.json({ error: "Duplicated song" }, { status: 400 });
+      return NextResponse.json({ error: 'Duplicated song' }, { status: 400 });
     }
   } catch (error) {
-    console.error("Error processing song:", error);
+    console.error('Error processing song:', error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: "Invalid input format", details: error.errors },
+        { error: 'Invalid input format', details: error.errors },
         { status: 400 }
       );
     }
 
-    return NextResponse.json(
-      { error: "Failed to process song" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to process song' }, { status: 500 });
   }
 }

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { SongForm } from "./song-form";
-import { SpotifyEmbedded } from "./spotify-embedded";
+import { useState } from 'react';
+import { SongForm } from './song-form';
+import { SpotifyEmbedded } from './spotify-embedded';
 
 export default function CardSong({ songsCount }: { songsCount: number }) {
   const [randomSongId, setRandomSongId] = useState<string | null>(null);
@@ -14,32 +14,30 @@ export default function CardSong({ songsCount }: { songsCount: number }) {
   };
 
   return (
-    <section className="w-full justify-around flex-col md:flex-row items-center md:px-4 lg:px-10 gap-10 sm:gap-40 flex mx-auto space-y-4">
-      <div className="flex flex-col gap-5 w-full">
-        <div className="flex text-nowrap text-[#f0f0f0] flex-col gap-2 w-full font-bold">
-          <h1 className="md:text-7xl lg:text-8xl text-6xl">
-            <span className="underline underline-offset-8 decoration-green-500">
+    <section className="mx-auto flex w-full flex-col items-center justify-around gap-10 space-y-4 sm:gap-40 md:flex-row md:px-4 lg:px-10">
+      <div className="flex w-full flex-col gap-5">
+        <div className="flex w-full flex-col gap-2 font-bold text-nowrap text-[#f0f0f0]">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl">
+            <span className="underline decoration-green-500 underline-offset-8">
               SHARE
-            </span>{" "}
+            </span>{' '}
             A SONG
           </h1>
-          <h1 className="md:text-7xl lg:text-8xl text-6xl">
-            <span className="decoration-green-500 underline underline-offset-8">
-              GET
-            </span>{" "}
+          <h1 className="text-6xl md:text-7xl lg:text-8xl">
+            <span className="underline decoration-green-500 underline-offset-8">GET</span>{' '}
             A SONG
           </h1>
         </div>
-        <div className="space-y-10 max-w-sm">
+        <div className="max-w-sm space-y-10">
           <SongForm onSongSubmitted={handleSongSubmitted} />
           <div className="flex flex-col gap-3">
-            <span className="text-zinc-500 text-sm w-full">
+            <span className="w-full text-sm text-zinc-500">
               {`${songCountLocal} unique songs uploaded`}
             </span>
           </div>
         </div>
       </div>
-      <div className="space-y-20 w-full text-right">
+      <div className="w-full space-y-20 text-right">
         <SpotifyEmbedded spotifyId={randomSongId} />
       </div>
     </section>

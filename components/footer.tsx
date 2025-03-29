@@ -1,14 +1,16 @@
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
+import githubIcon from '../public/github.svg';
 
 export default function Footer() {
   return (
-    <footer className="text-sm py-6 px-8 lg:px-0 w-full max-w-[1100px] text-zinc-500 flex justify-between">
+    <footer className="flex w-full max-w-[1100px] justify-between px-8 py-6 text-sm text-zinc-500 xl:px-0">
       <p>Guilherme Lopes</p>
       <Link
-        href={"https://github.com/guimox/sinalos"}
-        className="hover:opacity-50 duration-300 transition-all"
+        href={'https://github.com/guimox/sinalos'}
+        className="transition-all duration-300 hover:opacity-50"
       >
-        <img src="/github.svg" alt="GitHub" className="w-5 h-5" />
+        <Image src={githubIcon} alt="GitHub" className="h-5 w-5" />
       </Link>
     </footer>
   );

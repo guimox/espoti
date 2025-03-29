@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from 'react';
 
 type FetchResult<T> = {
   data: T | null;
@@ -9,7 +9,7 @@ type FetchResult<T> = {
 };
 
 interface UseFetchOptions<T> {
-  method?: "GET" | "POST" | "PUT" | "DELETE";
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
   immediate?: boolean;
   body?: any;
   headers?: Record<string, string>;
@@ -23,7 +23,7 @@ export function useFetch<T = any>(
   options: UseFetchOptions<T> = {}
 ): FetchResult<T> {
   const {
-    method = "GET",
+    method = 'GET',
     immediate = true,
     body = null,
     headers = {},
@@ -46,7 +46,7 @@ export function useFetch<T = any>(
       const fetchOptions: RequestInit = {
         method,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           ...headers,
         },
         body: body ? JSON.stringify(body) : undefined,
@@ -56,9 +56,7 @@ export function useFetch<T = any>(
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(
-          `HTTP error! status: ${response.status}, message: ${errorText}`
-        );
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
 
       const rawData = await response.json();
@@ -68,7 +66,7 @@ export function useFetch<T = any>(
       onSuccess?.(transformedData);
     } catch (err) {
       const fetchError =
-        err instanceof Error ? err : new Error("An unknown error occurred");
+        err instanceof Error ? err : new Error('An unknown error occurred');
 
       setError(fetchError);
       onError?.(fetchError);
