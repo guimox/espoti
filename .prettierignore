@@ -1,0 +1,4 @@
+.wrangler
+.next
+node_modules
+public/** */
