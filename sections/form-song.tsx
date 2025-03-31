@@ -129,6 +129,7 @@ export function SongForm({ onSongSubmitted }: SongFormProps) {
         >
           {isLoading ? 'Saving...' : 'Share'}
         </Button>
+        <div className="cf-turnstile" data-sitekey="0x4AAAAAABDNxg1kqXBb4Z88"></div>
       </form>
     </div>
   );

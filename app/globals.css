@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -32,19 +32,6 @@ h3 {
   60% {
     transform: translate(2px, -2px);
   }
-}
-
-.noise-overlay {
-  z-index: 1000;
-  pointer-events: none;
-  opacity: 0.045;
-  background-image: url("/grain.gif");
-  background-position: 0 0;
-  background-size: auto;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  inset: 0%;
 }
 
 @theme inline {
@@ -167,4 +154,29 @@ h3 {
 .TrackWidget_widgetContainer__gADzr {
   border-radius: 0 !important;
   width: 20rem !important;
+}
+
+.noise-overlay {
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url('/grain.gif');
+  background-position: 0 0;
+  background-size: auto;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  inset: 0%;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

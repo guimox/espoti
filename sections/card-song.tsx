@@ -1,16 +1,29 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
+import { useMediaQuery } from '@/hooks/use-media-query';
 import { useState } from 'react';
-import { SongForm } from './song-form';
+import { SongForm } from './form-song';
 import { SpotifyEmbedded } from './spotify-embedded';
 
 export default function CardSong({ songsCount }: { songsCount: number }) {
   const [randomSongId, setRandomSongId] = useState<string | null>(null);
   const [songCountLocal, setSongCountLocal] = useState(songsCount);
+  const [open, setOpen] = useState(false);
+  const isDesktop = useMediaQuery('(min-width: 768px)');
 
   const handleSongSubmitted = (randomSongId: string) => {
     setRandomSongId(randomSongId);
     setSongCountLocal((prev) => prev + 1);
+    setOpen(true);
   };
 
   return (
@@ -37,9 +50,40 @@ export default function CardSong({ songsCount }: { songsCount: number }) {
           </div>
         </div>
       </div>
-      <div className="w-full space-y-20 text-right">
-        <SpotifyEmbedded spotifyId={randomSongId} />
-      </div>
+
+      {isDesktop ? (
+        <div className="w-full space-y-4 text-right">
+          <SpotifyEmbedded spotifyId={randomSongId} />
+        </div>
+      ) : randomSongId ? (
+        <>
+          <div className="fixed right-6 bottom-30 z-50">
+            <Drawer open={open} onOpenChange={setOpen}>
+              <DrawerTrigger asChild>
+                <Button
+                  className="rounded-full bg-green-500 p-4 hover:bg-green-600"
+                  size="icon"
+                >
+                  <span className="sr-only">Open Spotify player</span>
+                </Button>
+              </DrawerTrigger>
+
+              <DrawerContent className="h-3/5 border-green-600 bg-zinc-900">
+                <div className="sr-only">
+                  <DrawerHeader>
+                    <DrawerTitle>Spotify song being played</DrawerTitle>
+                  </DrawerHeader>
+                </div>
+                <div className="mt-6 flex h-3/4 w-full flex-col items-center justify-center">
+                  <div className="w-3/4 max-w-md">
+                    <SpotifyEmbedded spotifyId={randomSongId} />
+                  </div>
+                </div>
+              </DrawerContent>
+            </Drawer>
+          </div>
+        </>
+      ) : null}
     </section>
   );
 }

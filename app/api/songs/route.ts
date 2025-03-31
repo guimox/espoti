@@ -84,5 +84,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to process song' }, { status: 500 });
   }
 }
-
-export const runtime = 'edge';
