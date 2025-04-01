@@ -1,11 +1,13 @@
+import { db } from '@/db/drizzle';
+import { songs } from '@/db/schema';
+import { eq, not, sql } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
 
-const prisma = new PrismaClient();
-
 export async function GET() {
-  const songsCount = await prisma.song.count({});
+  const result = await db.select({ count: sql<number>`count(*)` }).from(songs);
+  const songsCount = result[0].count;
+
   return NextResponse.json({
     songsCount,
   });
@@ -31,47 +33,45 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid Spotify URL format' }, { status: 400 });
     }
 
-    const existingSong = await prisma.song.findUnique({
-      where: {
+    const existingSong = await db
+      .select()
+      .from(songs)
+      .where(eq(songs.spotifyId, spotifyId))
+      .limit(1);
+
+    if (existingSong.length === 0) {
+      await db.insert(songs).values({
         spotifyId,
-      },
-    });
-
-    if (!existingSong) {
-      await prisma.song.create({
-        data: {
-          spotifyId,
-        },
-      });
-    }
-
-    const songsCount = await prisma.song.count({
-      where: {
-        NOT: {
-          spotifyId,
-        },
-      },
-    });
-
-    const randomIndex = Math.floor(Math.random() * songsCount);
-    const randomSong = await prisma.song.findMany({
-      where: {
-        NOT: {
-          spotifyId,
-        },
-      },
-      take: 1,
-      skip: randomIndex,
-    });
-
-    if (!existingSong) {
-      return NextResponse.json({
-        submittedId: spotifyId,
-        randomId: randomSong[0].spotifyId,
       });
     } else {
       return NextResponse.json({ error: 'Duplicated song' }, { status: 400 });
     }
+
+    const countResult = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(songs)
+      .where(not(eq(songs.spotifyId, spotifyId)));
+
+    const songsCount = countResult[0].count;
+
+    if (songsCount === 0) {
+      return NextResponse.json({
+        submittedId: spotifyId,
+        randomId: null,
+      });
+    }
+
+    const randomSong = await db
+      .select()
+      .from(songs)
+      .where(not(eq(songs.spotifyId, spotifyId)))
+      .orderBy(sql`RANDOM()`)
+      .limit(1);
+
+    return NextResponse.json({
+      submittedId: spotifyId,
+      randomId: randomSong[0].spotifyId,
+    });
   } catch (error) {
     console.error('Error processing song:', error);
     if (error instanceof z.ZodError) {
