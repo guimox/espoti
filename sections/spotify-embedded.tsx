@@ -82,7 +82,6 @@ export function SpotifyEmbedded({ spotifyId }: { spotifyId: string | null }) {
         ctrl.addListener('ready', () => {
           if (!isMountedRef.current) return;
           setIsLoading(false);
-          console.log('Spotify Player Ready');
           ctrl.play();
         });
 

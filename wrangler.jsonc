@@ -7,4 +7,11 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS",
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "sinalos",
+      "database_id": "8fb64180-169c-45ed-b41c-b945cef6422e",
+    },
+  ],
 }
