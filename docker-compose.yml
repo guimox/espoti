@@ -1,16 +1,16 @@
-version: "3.8"
+version: '3.8'
 
 services:
   postgres:
     image: postgres:latest
-    container_name: sinalos-db
+    container_name: espoti-db
     restart: always
     environment:
-      POSTGRES_DB: sinalos
+      POSTGRES_DB: espoti
       POSTGRES_USER: user
       POSTGRES_PASSWORD: secretPassword
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

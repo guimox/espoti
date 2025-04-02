@@ -2,7 +2,10 @@ import CardSong from '@/sections/card-song';
 
 async function fetchSongCount() {
   try {
-    const response = await fetch('https:///api/songs', {
+    const isDev = process.env.NODE_ENV == 'development';
+    const correctUrl = isDev ? 'http://localhost:3000' : process.env.WEBSITE_URL!;
+
+    const response = await fetch(correctUrl + '/api/songs', {
       next: { revalidate: 10 },
     });
 
@@ -23,7 +26,7 @@ export default async function Home() {
 
   return (
     <main className="mx-auto my-auto flex h-full w-full flex-col items-center justify-between gap-10 rounded bg-[#303030] py-10 text-zinc-500 transition-all duration-300">
-      <div className="bg flex h-full w-full flex-col items-start px-8 py-8 md:py-20">
+      <div className="bg flex h-full w-full flex-col items-start px-6 py-8 md:py-20">
         <CardSong songsCount={songsCount} />
       </div>
     </main>

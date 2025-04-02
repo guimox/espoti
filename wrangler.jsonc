@@ -1,17 +1,10 @@
 {
   "main": ".open-next/worker.js",
-  "name": "my-app",
+  "name": "espoti",
   "compatibility_date": "2024-09-23",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS",
   },
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "sinalos",
-      "database_id": "8fb64180-169c-45ed-b41c-b945cef6422e",
-    },
-  ],
 }

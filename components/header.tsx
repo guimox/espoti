@@ -1,22 +1,10 @@
 'use client';
 
-import * as React from 'react';
-import Image from 'next/image';
-import cogIcon from '../public/cog.svg';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from './ui/navigation-menu';
-
 export default function Header() {
   return (
     <header className="mx-auto flex w-full max-w-[1100px] items-center justify-between px-4 py-6 text-sm xl:px-0">
-      <p className="text-lg font-bold text-white">Sinalos</p>
-      <NavigationMenu>
+      <p className="text-lg font-bold text-white">Espoti</p>
+      {/* <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger className="cursor-pointer bg-transparent hover:bg-transparent">
@@ -29,7 +17,7 @@ export default function Header() {
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
-      </NavigationMenu>
+      </NavigationMenu> */}
     </header>
   );
 }

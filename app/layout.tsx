@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Staatliches } from 'next/font/google';
-import './globals.css';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
+import './globals.css';
 
 const staatliches = Staatliches({
   variable: '--font-custom',
@@ -11,8 +11,9 @@ const staatliches = Staatliches({
 });
 
 export const metadata: Metadata = {
-  title: 'Sinalos',
-  description: 'Share your favorite songs organically.',
+  title: 'Espoti - Share your songs organically',
+  description:
+    'Paste a song and receive a random song that was also pasted. All organically randomized.',
 };
 
 export default function RootLayout({
