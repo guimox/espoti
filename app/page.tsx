@@ -2,10 +2,7 @@ import CardSong from '@/sections/card-song';
 
 async function fetchSongCount() {
   try {
-    const isDev = process.env.NODE_ENV == 'development';
-    const correctUrl = isDev ? 'http://localhost:3000' : process.env.WEBSITE_URL!;
-
-    const response = await fetch(correctUrl + '/api/songs', {
+    const response = await fetch('https/espoti.com' + '/api/songs', {
       next: { revalidate: 10 },
     });
 
