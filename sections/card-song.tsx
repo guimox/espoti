@@ -26,7 +26,7 @@ export default function CardSong({ songsCount }: { songsCount: number }) {
   };
 
   return (
-    <section className="section-enter mx-auto flex w-full flex-col items-center justify-around gap-10 space-y-4 sm:gap-14 md:flex-row md:px-4 lg:px-10">
+    <section className="section-enter mx-auto flex w-full flex-col items-center justify-around gap-10 space-y-4 sm:gap-14 md:flex-row lg:px-10">
       <div className="flex w-full flex-col gap-5">
         <div className="flex w-full flex-col gap-2 font-bold text-nowrap text-[#f0f0f0]">
           <h1 className="heading-enter-first text-7xl lg:text-8xl">

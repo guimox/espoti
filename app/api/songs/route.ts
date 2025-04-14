@@ -4,6 +4,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
+import { extractSpotifyId } from '@/lib/utils';
+
+const songSchema = z.object({
+  url: z.string().url(),
+});
 
 export async function GET() {
   const client = postgres(process.env.DATABASE_URL!, { prepare: false });
@@ -17,16 +22,6 @@ export async function GET() {
     console.error('Error fetching song count:', error);
     return NextResponse.json({ error: 'Failed to fetch song count' }, { status: 500 });
   }
-}
-
-const songSchema = z.object({
-  url: z.string().url(),
-});
-
-function extractSpotifyId(url: string): string | null {
-  const regex = /spotify\.com\/track\/([a-zA-Z0-9]+)/;
-  const match = url.match(regex);
-  return match ? match[1] : null;
 }
 
 export async function POST(req: NextRequest) {
