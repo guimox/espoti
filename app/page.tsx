@@ -2,7 +2,7 @@ import CardSong from '@/sections/card-song';
 
 async function fetchSongCount() {
   try {
-    const response = await fetch('https://espoti.com' + '/api/songs', {
+    const response = await fetch('http://localhost:3000' + '/api/songs', {
       next: { revalidate: 10 },
     });
 
@@ -24,7 +24,7 @@ export default async function Home() {
   const { songsCount } = await fetchSongCount();
 
   return (
-    <main className="mx-auto my-auto flex h-full w-full flex-col items-center justify-between gap-10 rounded bg-[#303030] py-10 text-zinc-500 transition-all duration-300">
+    <main className="mx-auto my-auto flex h-full w-full flex-col items-center justify-between gap-10 rounded border border-zinc-600 bg-[#303030] py-10 text-zinc-500 transition-all duration-300">
       <div className="bg flex h-full w-full flex-col items-start px-6 py-8 md:py-20">
         <CardSong songsCount={songsCount} />
       </div>

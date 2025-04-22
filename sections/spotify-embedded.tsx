@@ -142,7 +142,7 @@ export function SpotifyEmbedded({ spotifyId }: { spotifyId: string | null }) {
   }
 
   return (
-    <div className="bg-[#303030 relative h-90 w-full rounded-lg">
+    <div className="relative my-auto flex w-full items-center rounded-lg">
       <div id="embed-iframe" ref={embedContainerRef} className="h-full"></div>
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-zinc-900">
