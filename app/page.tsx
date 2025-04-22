@@ -2,9 +2,11 @@ import CardSong from '@/sections/card-song';
 
 async function fetchSongCount() {
   try {
-    const response = await fetch('https/espoti.com' + '/api/songs', {
+    const response = await fetch('https://espoti.com' + '/api/songs', {
       next: { revalidate: 10 },
     });
+
+    console.log('Response:', response);
 
     if (!response.ok) {
       console.error('Failed to fetch song count');

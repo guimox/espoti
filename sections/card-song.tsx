@@ -29,13 +29,13 @@ export default function CardSong({ songsCount }: { songsCount: number }) {
     <section className="section-enter mx-auto flex w-full flex-col items-center justify-around gap-10 space-y-4 sm:gap-14 md:flex-row lg:px-10">
       <div className="flex w-full flex-col gap-5">
         <div className="flex w-full flex-col gap-2 font-bold text-nowrap text-[#f0f0f0]">
-          <h1 className="heading-enter-first text-7xl lg:text-8xl">
+          <h1 className="heading-enter-first text-6xl lg:text-8xl">
             <span className="underline decoration-green-500 underline-offset-8">
               SHARE
             </span>{' '}
             A SONG
           </h1>
-          <h1 className="heading-enter-second text-7xl lg:text-8xl">
+          <h1 className="heading-enter-second text-6xl lg:text-8xl">
             <span className="underline decoration-green-500 underline-offset-8">GET</span>{' '}
             A SONG
           </h1>

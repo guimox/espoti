@@ -104,7 +104,7 @@ export function SongForm({ onSongSubmitted }: SongFormProps) {
         <div className="relative flex-1 space-y-2">
           <Input
             {...register('url')}
-            placeholder="Paste your favorite Spotify song link"
+            placeholder="Your favorite Spotify song link"
             onChange={handleUrlChange}
             disabled={isLoading}
             className={

@@ -27,7 +27,7 @@ export default function RootLayout({
       <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
       <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
       <body
-        className={`${staatliches.variable} relative mx-auto flex h-screen max-w-[1100px] flex-col justify-between bg-zinc-900 antialiased transition-all duration-500 *:selection:bg-green-700 *:selection:text-white`}
+        className={`${staatliches.variable} relative mx-auto flex h-dvh max-w-[1100px] flex-col justify-between bg-zinc-900 antialiased transition-all duration-500 *:selection:bg-green-700 *:selection:text-white`}
       >
         <div className="noise-overlay" />
         <Header />
