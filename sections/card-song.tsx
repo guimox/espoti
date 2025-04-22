@@ -3,10 +3,9 @@
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { SongForm } from './form-song';
 import { SpotifyEmbedded } from './spotify-embedded';
-import { ChevronUp } from 'lucide-react'; // Import ChevronUp icon
 
 export default function CardSong({ songsCount }: { songsCount: number }) {
   const [randomSongId, setRandomSongId] = useState<string | null>(null);
